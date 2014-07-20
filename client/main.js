@@ -37,16 +37,13 @@ Meteor.autorun(function () {
 
   // Note: if we're viewing a game, its id is in the `viewingGame` Session
   // variable.
-  console.log("Autorun run");
-  console.log("viewingGame: " + Session.get("viewingGame"));
-  console.log("assignment: " + Session.get("assignment"));
   if(Meteor.userId() && !Session.get('viewingGame') && !Session.get('assignment')) {
     Meteor.call('getAssignment', function(error, result) {
       if(error)
         console.log("getAssignment resulted in error: " + error);
       else {
         // Set the "assignment" session variable to the result.
-        Session.set('assignment', result.answer !== null ? result.answer : "Answer undefined");
+        Session.set('assignment', (result.answer !== null) ? result.answer : "Answer undefined");
       }
     });
   }
