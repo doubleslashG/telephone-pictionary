@@ -49,8 +49,8 @@ Meteor.methods({
         move.previous = game.moves[game.moves.length - 1];
       else {
         game = {
-          moves: new list(),
-          participants: new list(),
+          moves: [],
+          participants: [],
           activeMove: null,
           done: false
         };

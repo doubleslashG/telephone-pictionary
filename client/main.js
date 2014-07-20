@@ -46,8 +46,7 @@ Meteor.autorun(function () {
         console.log("getAssignment resulted in error: " + error);
       else {
         // Set the "assignment" session variable to the result.
-        console.log("Participants: " + result.toString());
-        Session.set('assignment', result ? result.answer : "Answer undefined");
+        Session.set('assignment', result.answer !== null ? result.answer : "Answer undefined");
       }
     });
   }
