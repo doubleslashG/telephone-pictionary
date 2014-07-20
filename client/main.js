@@ -17,6 +17,8 @@ Template.main.assignment = function () {
   // For now, return a dummy.
   if(!Session.get("viewingGame"))
     return { description: Session.get('assignment')};
+  else
+    return null;
 };
 
 // return the game we're viewing, if any.
@@ -39,10 +41,15 @@ Meteor.autorun(function () {
   console.log("viewingGame: " + Session.get("viewingGame"));
   console.log("assignment: " + Session.get("assignment"));
   if(Meteor.userId() && !Session.get('viewingGame') && !Session.get('assignment')) {
-    var result = Meteor.call('getAssignment');
-    console.log("Move: " + result);
-    // Set the "assignment" session variable to the result.
-    Session.set('assignment', result ? result.answer : "Answer undefined");
+    Meteor.call('getAssignment', function(error, result) {
+      if(error)
+        console.log("getAssignment resulted in error: " + error);
+      else {
+        // Set the "assignment" session variable to the result.
+        console.log("Participants: " + result.toString());
+        Session.set('assignment', result ? result.answer : "Answer undefined");
+      }
+    });
   }
 });
 

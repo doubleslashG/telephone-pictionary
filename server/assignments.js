@@ -4,7 +4,6 @@ GAME_LENGTH = 3;
 Meteor.methods({
   // Return an assignment for the current user.
   getAssignment: function () {
-    console.log("Getting assignment");
     if (!Meteor.userId())
       throw new Meteor.Error(403, "Must be logged in to play");
 
@@ -28,6 +27,7 @@ Meteor.methods({
         answer: null,
         _id: Random.id()
       };
+      
       // PHASE 3
 
       // Use Mongo to find a game to tack this move on to.  The criteria are:
@@ -40,7 +40,7 @@ Meteor.methods({
         activeMove: null
       });
       
-      // If we found zaa game, set up the `previous` field on the move with the
+      // If we found a game, set up the `previous` field on the move with the
       // previous move in that game.
       // If we haven't found a game, set one up and insert it into the Games
       // collection. (hint: It's not done, its `activeMove` is null, has no
@@ -60,7 +60,7 @@ Meteor.methods({
       // Either way, set the `game` field on the move to be the _id of the game
       // it belongs to.
       move.game = game._id;
-
+      
 
       // Now we insert the move to the moves table.
       Moves.insert(move);
