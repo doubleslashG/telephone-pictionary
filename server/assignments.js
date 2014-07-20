@@ -4,6 +4,7 @@ GAME_LENGTH = 3;
 Meteor.methods({
   // Return an assignment for the current user.
   getAssignment: function () {
+    console.log("Getting assignment");
     if (!Meteor.userId())
       throw new Meteor.Error(403, "Must be logged in to play");
 
@@ -34,16 +35,31 @@ Meteor.methods({
       // * The game has no active move.
       // * We have not yet participated in this game (you can leave this
       //   one out for a while while you test).
-
+      var game = Games.findOne({
+        done: false,
+        activeMove: null
+      });
+      
       // If we found zaa game, set up the `previous` field on the move with the
       // previous move in that game.
-
       // If we haven't found a game, set one up and insert it into the Games
       // collection. (hint: It's not done, its `activeMove` is null, has no
       // participants yet, and no moves yet)
-
+      if(game)
+        move.previous = game.moves[game.moves.length - 1];
+      else {
+        game = {
+          moves: new list(),
+          participants: new list(),
+          activeMove: null,
+          done: false
+        };
+        Games.insert(game);
+      }
+      
       // Either way, set the `game` field on the move to be the _id of the game
       // it belongs to.
+      move.game = game._id;
 
 
       // Now we insert the move to the moves table.
@@ -53,6 +69,7 @@ Meteor.methods({
 
       // Okay, now let's set the `activeMove` of our game to our new move, using
       // the update() method on the Games collection.
+      Games.update(game._id,{$set: {activeMove: move._id}});
     }
 
     // Here, we do some work to make it easier for the client to make decisions
