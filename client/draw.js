@@ -72,6 +72,17 @@ Template.draw.events({
     if (templ.canvas && templ.canvas.getActiveObject()) {
       templ.canvas.remove(templ.canvas.getActiveObject());
     }
+  },
+  // PHASE 5
+
+  // When we click #done on drawing, submit the canvas's object representation
+  // (call toObject() on it)
+
+  // note: see the submitAnswer helper in main.js
+  'click #done': function(evt, templ) {
+    t = templ.canvas.toObject();
+    console.log("templ: " + templ.canvas.toObject().toString());
+    submitAnswer(templ.canvas.otObject());
   }
 });
 
@@ -103,10 +114,3 @@ Template.colorButton.events({
     Session.set('pencilColor',this.toString());
   }
 });
-
-// PHASE 5
-
-// When we click #done on drawing, submit the canvas's object representation
-// (call toObject() on it)
-
-// note: see the submitAnswer helper in main.js

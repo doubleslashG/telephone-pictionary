@@ -22,11 +22,19 @@
     Please log in!
   {{/unless}}
   {{#with assignment}}
-    <!-- PHASE 4 We should decide whether we're drawing, describing, or starting
+  <!-- PHASE 4 We should decide whether we're drawing, describing, or starting
          out a phrase, based on the assignment.  Replace this with code that
          does that.  Note that you can tell what kind of assignment it is based
          on whether `description`, `picture` or `start` is truthy.-->
-    {{> draw}}
+    {{#if picture}}
+      {{> describe}}
+    {{/if}}
+    {{#if description}}
+      {{> draw}}
+    {{/if}}
+    {{#if start}}
+      {{> start}}
+    {{/if}}
   {{/with}}
   {{#with game}}
     <!-- This will show the results of a finished game, if we're supposed to be looking at one -->

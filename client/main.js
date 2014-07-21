@@ -14,7 +14,6 @@ Template.main.assignment = function () {
   // Return the current assignment if we're not in game-viewing mode (in
   // game-viewing mode, the 'viewingGame' Session variable is truthy).
   
-  // For now, return a dummy.
   if(!Session.get("viewingGame"))
     return { description: Session.get('assignment')};
   else
