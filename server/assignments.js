@@ -13,7 +13,8 @@ Meteor.methods({
     // Modify this to require that the move hasn't expired.
     var move = Moves.findOne({
       assignee: Meteor.userId(),
-      answer: null
+      answer: null,
+      expires: {$gt: new Date()}
     });
     // If there's no such move, create one
     // * Assigned to us
@@ -130,8 +131,21 @@ Meteor.setInterval(function () {
   // PHASE 6
 
   // Find all the moves that are expired but not answered.
-
-  // Delete them from the Moves table.
-  // Find the relevant game, and unset them as the activeMove
-  // If the game is otherwise empty, just remove it from the Games table.
+  var oldMoves = Moves.find({
+    expires: {$lt: new Date()},
+    answer: null
+  });
+  
+  oldMoves.forEach(function (move) {
+    // Delete them from the Moves table.
+    Moves.remove(move._id);
+    
+    // Find the relevant game, and unset them as the activeMove
+    // If the game is otherwise empty, just remove it from the Games table.
+    var game = Games.findOne({
+      activeMove: move._id
+    });
+    Games.update(game._id, {$set: {activeMove: null}});
+    
+  });
 }, 10*1000);
