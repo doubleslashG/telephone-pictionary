@@ -15,7 +15,7 @@ Template.main.assignment = function () {
   // game-viewing mode, the 'viewingGame' Session variable is truthy).
   
   if(!Session.get("viewingGame"))
-    return { description: Session.get('assignment')};
+    return Session.get('assignment');
   else
     return null;
 };
@@ -42,7 +42,7 @@ Meteor.autorun(function () {
         console.log("getAssignment resulted in error: " + error);
       else {
         // Set the "assignment" session variable to the result.
-        Session.set('assignment', (result.answer !== null) ? result.answer : "Answer undefined");
+        Session.set('assignment', result);
       }
     });
   }
