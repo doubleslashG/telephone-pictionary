@@ -79,7 +79,7 @@ Template.draw.events({
   // (call toObject() on it)
 
   // note: see the submitAnswer helper in main.js
-  'click #done': function(evt, templ) {
+  'submit, click #done': function(evt, templ) {
     if(templ.canvas)
       submitAnswer(templ.canvas.otObject());
   }
