@@ -80,8 +80,9 @@ Template.draw.events({
 
   // note: see the submitAnswer helper in main.js
   'submit, click #done': function(evt, templ) {
-    if(templ.canvas)
-      submitAnswer(templ.canvas.otObject());
+    if(templ.canvas) {
+      submitAnswer(templ.canvas.toObject());
+    }
   }
 });
 
