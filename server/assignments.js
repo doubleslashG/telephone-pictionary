@@ -142,10 +142,7 @@ Meteor.setInterval(function () {
     
     // Find the relevant game, and unset them as the activeMove
     // If the game is otherwise empty, just remove it from the Games table.
-    var game = Games.findOne({
-      activeMove: move._id
-    });
-    Games.update(game._id, {$set: {activeMove: null}});
+    Games.update(move.game, {$set: {activeMove: null}});
     
   });
 }, 10*1000);
